@@ -58,6 +58,12 @@ class InventoryComponent:
     def __post_init__(self):
         self.weight = 0
 
+class LockComponent:
+    pass
+
+class ContainerComponent:
+    pass
+
 @dataclass
 class HealthComponent:
     maxHP: int = 1
@@ -74,8 +80,21 @@ class EnemyComponent:
     pass
 
 @dataclass
+class DescriptionComponent:
+    pass
+
+@dataclass
 class AttackComponent:
     pass
 
+@dataclass
+class CombatComponent:
+    pass
+
+@dataclass
 class UseComponent:
+    pass
+
+@dataclass
+class RoomConnectionComponent:
     pass
