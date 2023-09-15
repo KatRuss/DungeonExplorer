@@ -1,7 +1,6 @@
 from entity import Entity
 from inputs import genericTextInput, binaryChoiceInput, listChoiceInput
 from components import *
-from random import randint
 from weapons import testWeaponList
 
 def ChooseItems():
