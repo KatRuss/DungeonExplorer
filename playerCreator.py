@@ -5,7 +5,8 @@ from random import randint
 from weapons import testWeaponList
 
 def ChooseItems():
-    pass
+    items = ()
+    return items
 
 def ChooseWeapon(weaponList):
     newWeapon = listChoiceInput("What weapon would you like?", weaponList)
@@ -31,6 +32,7 @@ def createPlayerInventory():
           EquipmentSlotComponent(itemSlotType.FOOT),
           EquipmentSlotComponent(itemSlotType.FOOT),
         ),
+        items=ChooseItems(),
         weightCap=100
     )
     newInventory.weight = newInventory.calculateWeight()
@@ -72,4 +74,3 @@ def playerCreator():
     return newPlayer
 
 print(playerCreator())
-
