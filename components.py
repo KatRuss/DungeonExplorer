@@ -3,18 +3,18 @@ from enum import Enum
 from random import randint
 
 class attackType(Enum):
-    PHYSICAL: 0
-    ASTRIL: 0
-    FIRE: 0
-    LIGHTNING: 0
+    PHYSICAL = 0
+    ASTRIL = 1
+    FIRE = 2
+    LIGHTNING = 3
 
 class itemSlotType(Enum):
-    HEAD: 0
-    ARM: 1
-    CHEST: 2
-    LEG: 3
-    HAND: 4
-    FOOT: 5
+    HEAD = 0
+    ARM = 1
+    CHEST = 2
+    LEG = 3
+    HAND = 4
+    FOOT = 5
 
 # Represents a kind of die. e.g. sides = 6 means a standard six-sided die.
 @dataclass
@@ -34,6 +34,18 @@ class StatsComponent:
     mind: int = 0
     dex: int = 0
     cha: int = 0
+
+    def RollStats(self):
+        self.might = randint(1,6) + randint(1,6)
+        self.mind = randint(1,6) + randint(1,6)
+        self.dex = randint(1,6) + randint(1,6)
+        self.cha = randint(1,6) + randint(1,6)
+    
+    def PrintStats(self):
+        print(f"Might: {self.might}")
+        print(f"Mind: {self.mind}")
+        print(f"Dexterity: {self.dex}")
+        print(f"Charisma: {self.cha}")
     
 @dataclass
 class WeightComponent:

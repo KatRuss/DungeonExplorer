@@ -26,3 +26,4 @@ class Room:
     npcs: list = field(default_factory=list)
     items: list = field(default_factory=list)
     description: DescriptionComponent = None
+

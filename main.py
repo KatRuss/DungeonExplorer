@@ -7,3 +7,7 @@
 # - When Entering a room:
 #   - Load Description of room
 #   - If Enemy is present, either fight, leave room, or risk sneaking around!
+
+
+#To Do - Make a full character generator for the player
+
