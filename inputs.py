@@ -7,7 +7,7 @@ class genericKeyInputs(Enum):
 def genericTextInput():
     return input(">> ")
 
-def binaryChoiceInput(question, aInput: str = genericKeyInputs.YES.value, bInput: str = genericKeyInputs.NO.value):
+def binaryChoiceInput(question:str, aInput: str = genericKeyInputs.YES.value, bInput: str = genericKeyInputs.NO.value):
     print(question + f" ({aInput}/{bInput})")
     decision = input(">> ")
     if decision == aInput:
@@ -18,3 +18,14 @@ def binaryChoiceInput(question, aInput: str = genericKeyInputs.YES.value, bInput
         print(f"{decision} is not a valid key")
         print(f"The Valid Keys are [{aInput}/{bInput}]")
         return binaryChoiceInput(question,aInput,bInput)
+    
+def listChoiceInput(question:str, li:list):
+        print(question)
+        for x in range(0,len(li)):
+             print(f"{x+1}: {li[x]}")
+        choice = int(genericTextInput())
+        if choice >= 1 and choice <= len(li):
+             return li[choice-1]
+        else:
+            print(f"{choice} is not a valid key")
+            return listChoiceInput(question,li)

@@ -20,6 +20,9 @@ class Item(Entity):
     attackComponent: AttackComponent = None
     useComponent: UseComponent = None
 
+    def printItemStats(self):
+        print(f"[[Item Stats for '{self.name}' Printed]]")
+
 class Room:
     name: str = "Unamed Room"
     conncectedRooms: list = field(default_factory=list)

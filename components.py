@@ -70,6 +70,16 @@ class InventoryComponent:
     def __post_init__(self):
         self.weight = 0
 
+    def calculateWeight(self):
+        result = 0
+        for slot in self.equipmentSlots:
+            if not slot.equipment == None:
+                result += slot.equipment.weight.weight
+        for item in self.items:
+            if not item.weight == None:
+                result += item.weight.weight
+        return result
+
 class LockComponent:
     pass
 
@@ -93,7 +103,7 @@ class EnemyComponent:
 
 @dataclass
 class DescriptionComponent:
-    pass
+    string: str
 
 @dataclass
 class AttackComponent:

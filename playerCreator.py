@@ -1,22 +1,21 @@
 from entity import Entity
-from inputs import genericTextInput, binaryChoiceInput, genericKeyInputs
+from inputs import genericTextInput, binaryChoiceInput, listChoiceInput
 from components import *
 from random import randint
-
-# Process
-#   - Let player choose name
-#   - Choose Archetype
-#   - Construct Player Object out of that information.
+from weapons import testWeaponList
 
 def ChooseItems():
     pass
 
-def ChooseWeapon():
-    newWeapon = None
+def ChooseWeapon(weaponList):
+    newWeapon = listChoiceInput("What weapon would you like?", weaponList)
+    newWeapon.printItemStats()
 
-
-
-    return newWeapon
+    if binaryChoiceInput("Would you like this weapon?"):
+        return newWeapon
+    else:
+        print("My mistake...")
+        return ChooseWeapon(weaponList)
 
 def createPlayerInventory():
     newInventory = InventoryComponent(
@@ -27,14 +26,14 @@ def createPlayerInventory():
           EquipmentSlotComponent(itemSlotType.ARM),
           EquipmentSlotComponent(itemSlotType.LEG),
           EquipmentSlotComponent(itemSlotType.LEG),
-          EquipmentSlotComponent(itemSlotType.HAND),
+          EquipmentSlotComponent(itemSlotType.HAND,ChooseWeapon(testWeaponList)),
           EquipmentSlotComponent(itemSlotType.HAND),
           EquipmentSlotComponent(itemSlotType.FOOT),
           EquipmentSlotComponent(itemSlotType.FOOT),
         ),
-        items=ChooseItems(),
         weightCap=100
     )
+    newInventory.weight = newInventory.calculateWeight()
     return newInventory
 
 def createPlayerStats():
@@ -69,9 +68,8 @@ def playerCreator():
     newPlayer.stats = createPlayerStats()
     print("------- Inventory --------")
     newPlayer.inventory = createPlayerInventory()
-
+    
     return newPlayer
-
 
 print(playerCreator())
 
