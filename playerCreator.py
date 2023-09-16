@@ -1,7 +1,7 @@
 from entity import Entity
 from inputs import genericTextInput, binaryChoiceInput, listChoiceInput
 from components import *
-from weapons import testWeaponList
+from data.weapons import testWeaponList
 
 def ChooseItems():
     items = ()
