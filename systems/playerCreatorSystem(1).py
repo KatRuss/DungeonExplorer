@@ -1,15 +1,15 @@
-from entity import Entity
-from inputs import genericTextInput, binaryChoiceInput, listChoiceInput
-from components import *
-from data.weapons import testWeaponList
+from typing import List, TYPE_CHECKING
+from actions.combat import PlayerCombatChoice
 
 def ChooseItems():
     items = ()
     return items
 
 def ChooseWeapon(weaponList):
+    from inputs.playerInput import binaryChoiceInput, listChoiceInput
+
     newWeapon = listChoiceInput("What weapon would you like?", weaponList)
-    newWeapon.printItemStats()
+    newWeapon.printStats()
 
     if binaryChoiceInput("Would you like this weapon?"):
         return newWeapon
@@ -17,20 +17,22 @@ def ChooseWeapon(weaponList):
         print("My mistake...")
         return ChooseWeapon(weaponList)
 
+def createEquipmentSlots():
+    from components.inventory import EquipmentSlotComponent
+    from data.weapons import testWeaponList
+    from components.compEnum import itemSlotType
+    
+    equipmentSlots:List[EquipmentSlotComponent] = list()
+    
+    equipmentSlots.append(EquipmentSlotComponent(itemSlotType.WEAPON,ChooseWeapon(testWeaponList)))
+    equipmentSlots.append(EquipmentSlotComponent(itemSlotType.ARMOUR))
+    
+    return equipmentSlots
+
 def createPlayerInventory():
+    from components.inventory import InventoryComponent
+
     newInventory = InventoryComponent(
-        equipmentSlots=(
-          EquipmentSlotComponent(itemSlotType.HEAD),
-          EquipmentSlotComponent(itemSlotType.CHEST),
-          EquipmentSlotComponent(itemSlotType.ARM),
-          EquipmentSlotComponent(itemSlotType.ARM),
-          EquipmentSlotComponent(itemSlotType.LEG),
-          EquipmentSlotComponent(itemSlotType.LEG),
-          EquipmentSlotComponent(itemSlotType.HAND,ChooseWeapon(testWeaponList)),
-          EquipmentSlotComponent(itemSlotType.HAND),
-          EquipmentSlotComponent(itemSlotType.FOOT),
-          EquipmentSlotComponent(itemSlotType.FOOT),
-        ),
         items=ChooseItems(),
         weightCap=100
     )
@@ -38,6 +40,9 @@ def createPlayerInventory():
     return newInventory
 
 def createPlayerStats():
+    from components.base import StatsComponent
+    from inputs.playerInput import binaryChoiceInput
+    
     stats = StatsComponent()
     stats.RollStats()
     print("Current your Stats are:")
@@ -50,6 +55,8 @@ def createPlayerStats():
         return createPlayerStats()
 
 def createPlayerName():
+    from inputs.playerInput import genericTextInput, binaryChoiceInput
+    
     print("What is your name?")
     newName = genericTextInput()
     
@@ -61,15 +68,24 @@ def createPlayerName():
         return createPlayerName()
 
 def playerCreator():
+    from entities.item import Entity
+    from components.tags import UserComponent
+    from components.base import CombatComponent,HealthComponent
+    
     newPlayer = Entity()
     newPlayer.tag = UserComponent()
+    newPlayer.combat = CombatComponent(
+        combatActions=[
+            PlayerCombatChoice()
+        ]
+    )
     print("=== CHARACTER CREATION ===")
     newPlayer.name = createPlayerName()
     print("--------- Stats ----------")
     newPlayer.stats = createPlayerStats()
     print("------- Inventory --------")
     newPlayer.inventory = createPlayerInventory()
-    
-    return newPlayer
+    newPlayer.equipmentSlots = createEquipmentSlots()
+    newPlayer.health = HealthComponent(10+newPlayer.stats.might)
 
-print(playerCreator())
+    return newPlayer
