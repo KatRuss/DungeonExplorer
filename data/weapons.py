@@ -1,6 +1,6 @@
 from entities.item import Item
 from components.base import WeightComponent, DescriptionComponent
-from components.itemComp import AttackComponent, DefenseComponent,dieType,attackType
+from components.itemComp import AttackComponent, DefenseComponent,dieType
 
 Longsword = Item(
     name="Longsword",

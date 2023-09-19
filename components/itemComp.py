@@ -4,7 +4,7 @@ from components.compEnum import attackType, dieType
 
 @dataclass
 class AttackComponent:
-    dice: dieType = dieType(4)
+    dice: dieType = field(default_factory=lambda: dieType(4))
     diceNum: int = 1
     atype : attackType = attackType.PHYSICAL
     flatDamage: int = 0
