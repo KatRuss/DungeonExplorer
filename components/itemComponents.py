@@ -1,6 +1,6 @@
 #FOR ATTACK, DEFENSE, USE
 from dataclasses import dataclass, field
-from components.compEnum import attackType, dieType
+from components.componentEnum import attackType, dieType
 
 @dataclass
 class AttackComponent:
@@ -12,7 +12,8 @@ class AttackComponent:
     def calculateDamage(self):
         result = 0
         for x in range(0,self.diceNum):
-            result + self.dice.RollDie()
+            print("Damage die rolled")
+            result += self.dice.RollDie()
         return result + self.flatDamage
     
 @dataclass

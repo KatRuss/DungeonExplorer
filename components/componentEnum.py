@@ -19,4 +19,6 @@ class dieType():
     sides: int
     
     def RollDie(self):
-        return randint(1,self.sides)
+        roll = randint(1,self.sides)
+        print(f"Rolled: {roll}")
+        return roll

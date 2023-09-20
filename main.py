@@ -1,9 +1,6 @@
 from systems.playerCreatorSystem import playerCreator
-from systems.combatSystem import initCombat
-from data.enemies import Goblin
-
+from entities.room import testRoom
 
 player = playerCreator()
-enemy = Goblin
-
-initCombat(player,enemy)
+room = testRoom
+player.EnterRoom(room)

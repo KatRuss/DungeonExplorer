@@ -1,6 +1,6 @@
 # FOR INVENTORY, EQUIPMENT SLOT,
 from dataclasses import dataclass, field
-from components.compEnum import itemSlotType
+from components.componentEnum import itemSlotType
 
 # Gives an entity the capacity to hold items.
 @dataclass

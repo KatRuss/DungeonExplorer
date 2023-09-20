@@ -1,21 +1,36 @@
 # For running the combat
 from random import randint
-from typing import List,TYPE_CHECKING
+from typing import List
 from entities.entity import Entity
+from formatting.textFormat import printLine,printTitle,printSubTitle
 
 def getTurnOrder(entities: List[Entity]):
     for entity in entities:
         entity.combat.initiative = randint(1,20)+entity.stats.dex
-    return sorted(entities,key=lambda entity: entity.combat.initiative)
+    return sorted(entities,key=lambda entity: entity.combat.initiative, reverse=True)
     
 
 def initCombat(player: Entity, enemy: Entity):
-    combatEnded = False
+    combat = True
     turnOrder = getTurnOrder([player,enemy])
     
-    for entity in turnOrder:
-        print(f"{entity.name}: {entity.combat.initiative}")
+    player.combat.currentEnemy = enemy
+    player.combat.parent = player
+    enemy.combat.currentEnemy = player
+    enemy.combat.parent = enemy
     
-    # while combatEnded == False:
-    #     for entity in turnOrder:
-    #         entity.combat.doCombatAction()
+    printTitle("Combat!")
+    printSubTitle(f"You have been attacked by {enemy.name}")
+    while combat == True:
+        for entity in turnOrder:
+            if entity.health.isDead == True:
+                print(f"{entity.name} is dead")
+                combat = False
+                break
+            printSubTitle(f"{entity.name}'s Turn!")
+            if entity.health.isDead == False:
+                turnTaken = False
+                while turnTaken == False:
+                    turnTaken = entity.combat.doCombatAction()
+            
+    print("Combat is over!")

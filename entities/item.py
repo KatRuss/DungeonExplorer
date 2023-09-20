@@ -1,7 +1,8 @@
 from dataclasses import dataclass, field
 from typing import List
 from entities.entity import Entity
-from components.itemComp import AttackComponent, DefenseComponent, UseComponent
+from components.itemComponents import AttackComponent, DefenseComponent, UseComponent
+from formatting.textFormat import printTitle, printSubTitle, printLine, printListEntry
 
 @dataclass
 class Item(Entity):
@@ -13,19 +14,19 @@ class Item(Entity):
         return self.name
 
     def printStats(self):
-        print(f"=== {self.name} ===")
+        printTitle(self.name)
         num = 1
         if self.attackComponents != []:
-            print(f"=== Attacks ===")
+            printSubTitle("Attacks")
             for attack in self.attackComponents:
-                print(f" - {attack.diceNum}d{attack.dice.sides}{f'+{attack.flatDamage} ' if attack.flatDamage > 0 else ' '}{attack.atype.name} Damage")
+                printListEntry(f"{attack.diceNum}d{attack.dice.sides}{f'+{attack.flatDamage} ' if attack.flatDamage > 0 else ' '}{attack.atype.name} Damage")
                 num+=1
         num = 1
         if self.defenseComponents != []:
-            print("=== Defences ===")
+            printSubTitle("Defences")
             for defense in self.defenseComponents:
-                print(f" - {defense.amount} {defense.defType.name} defense")
+                printListEntry(f"{defense.amount} {defense.defType.name} defense")
                 num += 1
         # Insert Use Components here
-        print("== Description ==")
+        printSubTitle("Description")
         print(self.descriptionComp)

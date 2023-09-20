@@ -1,8 +1,8 @@
 # For STATS, WEIGHT, HEALTH, DESCRIPTION
 from dataclasses import dataclass, field
 from random import randint
-from typing import List, TYPE_CHECKING
-
+from typing import List
+from actions.baseActions import Action
 
 # Gives an entity the capacity to have the in game stats. Used for players and enemies.
 @dataclass
@@ -55,11 +55,12 @@ class DescriptionComponent:
 # The entity has the capacity to initiate combat, have actions in combat, etc.
 @dataclass
 class CombatComponent:
-    
-    combatActions : list = field(default_factory=list)
+    parent: object = None
+    currentEnemy: object = None
+    combatActions : List[Action] = field(default_factory=list)
 
-    def doCombatAction(self, id: int):
-        self.combatActions[id].do()
+    def doCombatAction(self, id: int = 0):
+        return self.combatActions[id].do(activator=self.parent,target=self.currentEnemy)
     
     def __post_init__(self):
        self.initiative: int = 0 

@@ -1,16 +1,16 @@
-from typing import List, TYPE_CHECKING
-from actions.combat import PlayerCombatChoice
+from typing import List
+from actions.combatActions import PlayerCombatChoice
 
 def ChooseItems():
     items = ()
     return items
 
 def ChooseWeapon(weaponList):
-    from inputs.playerInput import binaryChoiceInput, listChoiceInput
+    from inputs.playerInput import binaryChoiceInput, listChoiceInput,pausePlayer
 
     newWeapon = listChoiceInput("What weapon would you like?", weaponList)
     newWeapon.printStats()
-
+    pausePlayer()
     if binaryChoiceInput("Would you like this weapon?"):
         return newWeapon
     else:
@@ -18,9 +18,9 @@ def ChooseWeapon(weaponList):
         return ChooseWeapon(weaponList)
 
 def createEquipmentSlots():
-    from components.inventory import EquipmentSlotComponent
+    from components.inventoryComponents import EquipmentSlotComponent
     from data.weapons import testWeaponList
-    from components.compEnum import itemSlotType
+    from components.componentEnum import itemSlotType
     
     equipmentSlots:List[EquipmentSlotComponent] = list()
     
@@ -30,7 +30,7 @@ def createEquipmentSlots():
     return equipmentSlots
 
 def createPlayerInventory():
-    from components.inventory import InventoryComponent
+    from components.inventoryComponents import InventoryComponent
 
     newInventory = InventoryComponent(
         items=ChooseItems(),
@@ -40,7 +40,7 @@ def createPlayerInventory():
     return newInventory
 
 def createPlayerStats():
-    from components.base import StatsComponent
+    from components.baseComponents import StatsComponent
     from inputs.playerInput import binaryChoiceInput
     
     stats = StatsComponent()
@@ -51,7 +51,7 @@ def createPlayerStats():
     if binaryChoiceInput(question= "Would you like to keep these stats?"):
         return stats
     else:
-        print("My mistake...")
+        print("Rerolling...")
         return createPlayerStats()
 
 def createPlayerName():
@@ -61,16 +61,15 @@ def createPlayerName():
     newName = genericTextInput()
     
     if binaryChoiceInput(question= f"Is {newName} your name?"):
-        print("Very Well")
         return newName
     else:
-        print("My mistake...")
+        print("My Mistake...")
         return createPlayerName()
 
 def playerCreator():
     from entities.item import Entity
-    from components.tags import UserComponent
-    from components.base import CombatComponent,HealthComponent
+    from components.tagsComponents import UserComponent
+    from components.baseComponents import CombatComponent,HealthComponent
     
     newPlayer = Entity()
     newPlayer.tag = UserComponent()
