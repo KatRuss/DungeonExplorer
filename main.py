@@ -1,6 +1,9 @@
+#TODO: Split up all of the 
+
 from systems.playerCreatorSystem import playerCreator
 from entities.room import testRoom
+from systems.roomSystem import enterRoom
 
 player = playerCreator()
 room = testRoom
-player.EnterRoom(room)
+enterRoom(player,room)

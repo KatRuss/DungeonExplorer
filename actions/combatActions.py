@@ -2,6 +2,7 @@ from actions.baseActions import Action
 from inputs.playerInput import listChoiceInput, pausePlayer
 from entities.entity import Entity
 from actions.baseActions import Action
+from systems.entitySystems import PrintStats
 
 class AttackAction(Action):
     def do(self, activator, target) -> bool:
@@ -23,7 +24,7 @@ class AttackAction(Action):
 class LookAction(Action):
     def do(self, activator, target) -> bool:
         if isinstance(target,Entity):
-            target.PrintStats()
+            PrintStats(target)
         pausePlayer()
         return False
 
@@ -34,7 +35,7 @@ class PassAction(Action):
 
 class CheckSelfAction(Action):
     def do(self, activator, target) -> bool:
-        activator.PrintStats()
+        PrintStats(activator)
         pausePlayer()
         return False
 
