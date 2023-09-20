@@ -2,7 +2,7 @@ from actions.baseActions import Action
 from inputs.playerInput import listChoiceInput, pausePlayer
 from entities.entity import Entity
 from actions.baseActions import Action
-from systems.entitySystems import PrintStats
+from systems.entitySystems import PrintStats, calculateDefense
 
 class AttackAction(Action):
     def do(self, activator, target) -> bool:
@@ -13,7 +13,7 @@ class AttackAction(Action):
                 if equipmentSlot.equipment != None:
                     for attack in equipmentSlot.equipment.attackComponents:
                         damage = attack.calculateDamage()
-                        damage = max(0,damage-target.calculateDefense())
+                        damage = max(0,damage-calculateDefense(target))
                         print(f"{target.name} Takes {damage} {attack.atype.name} Damage!")
                         target.health.takeDamage(damage)
                         pausePlayer()

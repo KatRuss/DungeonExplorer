@@ -5,4 +5,7 @@ from abc import ABC, abstractmethod
 class Action(ABC):
     @abstractmethod
     def do(self, activator, target) -> bool:
-        pass
+        return False
+    
+
+    

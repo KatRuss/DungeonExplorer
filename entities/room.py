@@ -11,6 +11,8 @@ class Room(Entity):
     items: List[Item] = field(default_factory=list)
     enemy: Entity = None
     connectedRooms: List[RoomConnectionComponent] = field(default_factory=list)
+    roomIntro: str = " "
+    roomSearchStrings: List[str] = field(default_factory=list)
 
     def __post_init__(self):
         self.playerInRoom = False
@@ -18,5 +20,6 @@ class Room(Entity):
 testRoom = Room(
     name="Test Room",
     enemy=Goblin,
-    descriptionComp=DescriptionComponent("This is a cool looking test room.")
+    descriptionComp=DescriptionComponent("This is a cool looking test room."),
+    roomIntro="This is still a cool looking test room"
 )

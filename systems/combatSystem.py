@@ -2,7 +2,7 @@
 from random import randint
 from typing import List
 from entities.entity import Entity
-from formatting.textFormat import printLine,printTitle,printSubTitle
+from formatting.textFormat import printTitle,printSubTitle
 
 def getTurnOrder(entities: List[Entity]):
     for entity in entities:
