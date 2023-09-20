@@ -38,7 +38,6 @@ def roomLoop(player, room):
     #- Give player the initial description of the room (post combat perhaps)
     printRoomIntroduction(room)
     pausePlayer()
-    roomAction = PlayerRoomChoiceAction()
     movedRoom = False
     while movedRoom == False:
         movedRoom = PlayerRoomChoiceAction().do(activator=player,target=room)

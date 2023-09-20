@@ -1,5 +1,3 @@
-#TODO: Split up all of the 
-
 from systems.playerCreatorSystem import playerCreator
 from entities.room import testRoom
 from systems.roomSystem import enterRoom
