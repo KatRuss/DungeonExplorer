@@ -19,7 +19,7 @@ def enterRoom(target, room):
         enemy = checkRoomForEnemies(room)
         if enemy != None:
             initCombat(target,enemy)
-
+        room.enemy = None
         # -- ROOM ACTIONS UPDATE --
         roomLoop(target,room)
 

@@ -1,9 +1,7 @@
 from entities.entity import Entity
 from entities.item import Item
-from components.baseComponents import DescriptionComponent
 from components.roomsComponents import RoomConnectionComponent
 from dataclasses import dataclass,field
-from data.enemies import Goblin
 from typing import List
 
 @dataclass
@@ -17,17 +15,6 @@ class Room(Entity):
     def __post_init__(self):
         self.playerInRoom = False
 
-combatRoom = Room(
-    name="Test Combat Room",
-    enemy=Goblin,
-    descriptionComp=DescriptionComponent("This is a cool looking test room."),
-    roomIntro="This is still a cool looking test room",
-    connectedRooms=[]
-)
+    def __str__(self) -> str:
+        return self.name
 
-testRoom = Room (
-    name="Test Room",
-    descriptionComp=DescriptionComponent("This is a test room"),
-    roomIntro="It looks pretty cool",
-    connectedRooms=[]
-)
