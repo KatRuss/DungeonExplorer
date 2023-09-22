@@ -5,13 +5,9 @@ class genericKeyInputs(Enum):
     YES = "y"
     NO = "n" 
 
-
-
 #This is to control the flow of information being given to the player, so the player has time to read everything that is being outputted to them
 def pausePlayer():
-    printThinLine()
     dummy = input(".. Press ENTER to continue ..")
-    printThinLine()
     
 def genericTextInput():
     printThinLine()

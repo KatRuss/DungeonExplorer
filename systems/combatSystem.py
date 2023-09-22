@@ -3,6 +3,7 @@ from random import randint
 from typing import List
 from entities.entity import Entity
 from formatting.textFormat import printTitle,printSubTitle
+from components.tagsComponents import UserComponent
 
 def getTurnOrder(entities: List[Entity]):
     for entity in entities:
@@ -25,6 +26,10 @@ def initCombat(player: Entity, enemy: Entity):
         for entity in turnOrder:
             if entity.health.isDead == True:
                 print(f"{entity.name} is dead")
+                entity.location = None
+                if isinstance(entity.tag,UserComponent):
+                    print("Game Over :(")
+                    exit() #TODO: Have a real game-over function (restarting the game, going back to a main menu, etc.)
                 combat = False
                 break
             printSubTitle(f"{entity.name}'s Turn!")

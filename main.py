@@ -1,7 +1,8 @@
 from systems.playerCreatorSystem import playerCreator
-from entities.room import testRoom
-from systems.roomSystem import enterRoom
+from entities.room import testRoom, combatRoom
+from systems.roomSystem import enterRoom,addRoomConnection
 
 player = playerCreator()
-room = testRoom
-enterRoom(player,room)
+addRoomConnection(testRoom,combatRoom)
+
+enterRoom(player,testRoom)

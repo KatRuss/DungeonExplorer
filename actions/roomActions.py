@@ -9,17 +9,25 @@ class LookAroundAction(Action):
     def do(self, activator, target) -> bool:
         return super().do(activator, target)
     
-    
-
 class MoveRoomAction(Action):
     def do(self, activator, target) -> bool:
         print("The player has left the room")
         target.playerInRoom = False
         
-        #TODO: Add functionality for the player to actually move between rooms
-
+        _roomList = target.connectedRooms
+        if _roomList != []:
+            choice = listChoiceInput("What room would you like to enter?", _roomList)
+            
+            if choice.lock == None:
+                return choice.otherRoom
+            else:
+                print("The door is locked")
+                return False
+        
         return True
 
+        
+        
 class PlayerRoomChoiceAction(Action):
     _actionsList = ['Look Around','Check Self','Move Room']
     def do(self, activator, target) -> bool:

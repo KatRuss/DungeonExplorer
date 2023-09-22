@@ -3,6 +3,8 @@ from components.tagsComponents import UserComponent
 from formatting.textFormat import printTitle, printSubTitle, printLine
 from inputs.playerInput import pausePlayer
 from actions.roomActions import PlayerRoomChoiceAction
+from entities.room import Room
+from components.roomsComponents import RoomConnectionComponent, LockComponent
 
 def enterRoom(target, room):
     target.location = room
@@ -25,22 +27,19 @@ def enterRoom(target, room):
 
 def roomLoop(player, room):
     
-    # Process
-    #   
-    #   - while the player hasn't left the room: 
-    #       - allow player to perform actions in the room
-    #       - Including:
-    #           - Checking themselves
-    #           - Looking around for items
-    #           - Moving between different rooms
-    #           - Saving the game perhaps
-    
-    #- Give player the initial description of the room (post combat perhaps)
     printRoomIntroduction(room)
     pausePlayer()
     movedRoom = False
     while movedRoom == False:
         movedRoom = PlayerRoomChoiceAction().do(activator=player,target=room)
+
+    #Player has moved room or signed that they are quitting the game
+    if isinstance(movedRoom,Room):
+        enterRoom(player,movedRoom)
+    
+    # Quit game
+    if movedRoom == True:
+        exit()
 
 def assignNPCsToRoom(room):
     for npc in room.npcs:
@@ -50,7 +49,7 @@ def checkRoomForEnemies(room):
     if room.playerInRoom and room.enemy != None:
         return room.enemy
     else:
-        return False
+        return None
     
 # For entering the room for the first time (before combat)
 def printRoomEntry(room):
@@ -65,3 +64,8 @@ def printRoomIntroduction(room):
     printTitle(room.name)
     if room.roomIntro != " ":
         print(room.roomIntro)
+        
+def addRoomConnection(room1: Room, room2: Room, lock:LockComponent = None):
+    room1.connectedRooms.append(RoomConnectionComponent(otherRoom=room2, lock=lock))
+    room2.connectedRooms.append(RoomConnectionComponent(otherRoom=room1, lock=lock))
+    

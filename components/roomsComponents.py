@@ -1,5 +1,10 @@
 from dataclasses import dataclass
 
+class LockComponent:
+    pass
+
 @dataclass
 class RoomConnectionComponent:
-    pass
+    otherRoom: object = None
+    lock: LockComponent = None
+    
